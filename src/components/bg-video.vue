@@ -6,6 +6,7 @@
       :options="options"
       id="fullpage"
       @on-leave="fullPageChange"
+      v-show="isShow"
     >
       <div class="section" id="sectionOne" @click="interact">
         <!-- 阻止事件冒泡 -->
@@ -277,12 +278,16 @@
             :rules="[{ validatorQQ, message: '不要超过10个字符哦~' }]"
           />
           <van-field
-            v-model="form.school"
+            v-model="form.tech"
             label="专业"
             placeholder="例如: 计算机科学与技术/其他..."
             :rules="[{ validatorQQ, message: '不要超过10个字符哦~' }]"
           />
-          <div class="ctc">可以添加 <span style="color:#3a96dd">嘉嘉老师（1341384793）</span>好友，回复已提交领取前端学习大礼包~</div>
+          <div class="ctc">
+            可以添加
+            <span style="color: #3a96dd">嘉嘉老师（1341384793）</span
+            >好友，回复已提交领取前端学习大礼包~
+          </div>
           <div style="margin: 5px 16px">
             <van-button plain block type="info" native-type="submit"
               >提交</van-button
@@ -290,10 +295,11 @@
           </div>
         </van-form>
         <div class="ques-img">
-          <img :src="require('../assets/cov.png')" />
+          <img width="200px" height="200px" :src="require('../assets/cov.png')" />
         </div>
-<div class="ctc ques-copyright">@Copyright © 2022 YingGe Tech</div>
-<div class="ctc ques-editor">Created By Peng Jinwei</div>
+        <div class="ctc ques-copyright">@Copyright © 2022 YingGe Tech</div>
+        <div class="ctc ques-editor">Created By Peng Jinwei</div>
+        <div class="ctc ques-qrcode"><img width="100px" height="100px" :src="require('../assets/qccode.png')"/></div>
       </div>
     </full-page>
   </div>
@@ -306,6 +312,8 @@ export default {
   name: "BackgroudVideo",
   data: function () {
     return {
+      isShow: false,
+      isAutoPlay: false,
       pageIndex: 0,
       shakeHand: false,
       loveCount: 0,
@@ -324,8 +332,9 @@ export default {
       },
       form: {
         name: "",
-        email: "",
-        QQ: "",
+        school: "",
+        qq: "",
+        tech: "",
       },
       isLoading: false,
       fullPage: [
@@ -338,8 +347,9 @@ export default {
       videoPlayers: [],
       videoUrls: [
         "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAggvTYkwYo2P6g3gM.mp4",
-        "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAggvTYkwYooMD47gY.mp4",
         "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAggvTYkwYokq_Q2Ac.mp4",
+        "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAggvTYkwYooMD47gY.mp4",
+        "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAgs6TekwYo5IbZkQI.mp4",
       ],
     };
   },
@@ -347,27 +357,37 @@ export default {
     // 播放器初始化
     const Aliplayer = await this.getPlay();
     for (let i = 0; i < this.videoUrls.length; i++) {
+      if (i === 0) {
+        this.isAutoPlay = true;
+      } else {
+        this.isAutoPlay = false;
+      }
       const playerIntance = new Aliplayer({
         id: this.fullPage[i],
         source: this.videoUrls[i], //播放地址，可以是第三方直播地址，或阿里云直播服务中的拉流地址。
         isLive: false, //是否为直播播放。
         rePlay: true, // 重复播放
-        autoplay: false,
+        autoplay: this.isAutoPlay,
       });
       this.videoPlayers.push(playerIntance);
     }
-    // 初始化播放第一个视频
     this.videoPlayers[this.pageIndex].play();
+    this.isShow = true;
   },
   computed: {},
   methods: {
     async fullPageChange(origin, destination) {
-      if (destination.index + 1 > this.videoUrls.length) {
-        this.videoPlayers[origin.index]?.pause();
+      // bug
+      this.pageIndex = destination.index;
+      this.videoPlayers[this.pageIndex]?.pause();
+      if (destination.index >= 4) {
+        this.pageIndex = destination.index - 1;
+      }
+      if (this.pageIndex > this.videoUrls.length) {
+        await this.videoPlayers[origin.index]?.pause();
         return;
       }
-      this.videoPlayers[destination.index]?.play();
-      console.log(origin.index, destination.index, "fullPageChange");
+      await this.videoPlayers[this.pageIndex]?.play();
     },
     getloveMsg() {
       if (this.msgs.length === 0) {
@@ -394,7 +414,6 @@ export default {
       this.information = true;
     },
     validatorName(val) {
-      console.log(val.length);
       return val.length < 10;
     },
     validatorEmail() {
@@ -413,6 +432,23 @@ export default {
           },
         }
       );
+      this.$notify({
+        message: '你已成功提交报名信息！',
+        dangerouslyUseHTMLString: true,
+        duration: "750",
+      });
+      setTimeout(() => {
+        const link = document.createElement('a');
+        link.style.display = 'none';
+        link.href = 'tencent://message/?uin=1341384793&Site=http://iproute.cn&Menu=yes';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }, 4000);
+      this.form.name = '';
+      this.form.school = '';
+      this.form.qq = '';
+      this.form.tech = '';
     },
     async getPlay() {
       return new Promise((resolve) => {
@@ -527,7 +563,7 @@ export default {
   width: 200px;
   height: 200px;
   bottom: 0px;
-  left: 0px
+  left: 0px;
   /* z-index: 3; */
 }
 .ctc {
@@ -542,8 +578,13 @@ export default {
   bottom: 0px;
 }
 .ques-editor {
-    position: absolute;
+  position: absolute;
   right: 0px;
   bottom: 26px;
+}
+.ques-qrcode {
+  position: absolute;
+  right: 0px;
+  bottom: 45px;
 }
 </style>
