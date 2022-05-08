@@ -226,35 +226,74 @@
         > -->
       </div>
       <div class="section" id="sectionFive">
+        <div class="ques-title">报名表</div>
+        <div class="qeus-mini-title">Registration Form</div>
+        <el-divider content-position="right"
+          ><svg
+            t="1651989880693"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="1134"
+            width="32"
+            height="32"
+          >
+            <path
+              d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z"
+              fill="#69C2F9"
+              p-id="1135"
+            ></path>
+            <path
+              d="M528.64 505.6h229.12c33.28 0 61.44 25.6 61.44 57.6v112.64c0 32-26.88 57.6-61.44 57.6h-192c-2.56 0-5.12 1.28-7.68 2.56l-32 24.32c-6.4 5.12-14.08 7.68-23.04 7.68-5.12 0-10.24-1.28-15.36-2.56-14.08-5.12-21.76-17.92-21.76-30.72V564.48c1.28-32 28.16-58.88 62.72-58.88z"
+              fill="#FFFFFF"
+              opacity=".5"
+              p-id="1136"
+            ></path>
+            <path
+              d="M300.8 256h358.4c52.48 0 96 46.08 96 102.4v199.68c0 56.32-43.52 102.4-96 102.4H359.68c-3.84 0-8.96 1.28-11.52 3.84l-49.92 42.24c-10.24 8.96-23.04 12.8-35.84 12.8-7.68 0-15.36-1.28-23.04-5.12C217.6 704 204.8 683.52 204.8 659.2V358.4c0-56.32 43.52-102.4 96-102.4z m290.56 235.52c20.48 0 35.84-16.64 35.84-35.84s-16.64-35.84-35.84-35.84c-20.48 0-35.84 16.64-35.84 35.84-1.28 19.2 15.36 35.84 35.84 35.84z m-106.24 0c20.48 0 35.84-16.64 35.84-35.84s-16.64-35.84-35.84-35.84c-20.48 0-35.84 16.64-35.84 35.84-1.28 19.2 15.36 35.84 35.84 35.84z m-110.08 0c20.48 0 35.84-16.64 35.84-35.84 0-20.48-16.64-35.84-35.84-35.84-20.48 0-35.84 16.64-35.84 35.84 0 19.2 16.64 35.84 35.84 35.84z"
+              fill="#FFFFFF"
+              p-id="1137"
+            ></path></svg
+        ></el-divider>
+        <div class="ctc">🙊想了解更多吗？留下你的信息📘吧~</div>
         <van-form @submit="onSubmit">
           <van-field
             v-model="form.name"
-            name="用户名"
-            label="用户名"
+            label="姓名"
             placeholder="例如: 马超/妲己/后裔/镜"
             :rules="[{ validatorName, message: '不要超过10个字符哦~' }]"
           />
           <van-field
-            v-model="form.email"
-            name="用户名"
-            label="用户名"
-            placeholder="例如: xxx@email.com"
+            v-model="form.qq"
+            label="QQ"
+            placeholder="...不用例如了"
             :rules="[{ validatorEmail, message: '不要超过10个字符哦~' }]"
           />
           <van-field
-            v-model="form.QQ"
-            type="password"
-            name="密码"
-            label="密码"
-            placeholder="例如: 7491481843"
+            v-model="form.school"
+            label="学校"
+            placeholder="例如: 江苏大学/江苏科技大学/其他..."
             :rules="[{ validatorQQ, message: '不要超过10个字符哦~' }]"
           />
-          <div style="margin: 16px">
-            <van-button round block type="info" native-type="submit"
+          <van-field
+            v-model="form.school"
+            label="专业"
+            placeholder="例如: 计算机科学与技术/其他..."
+            :rules="[{ validatorQQ, message: '不要超过10个字符哦~' }]"
+          />
+          <div class="ctc">可以添加 <span style="color:#3a96dd">嘉嘉老师（1341384793）</span>好友，回复已提交领取前端学习大礼包~</div>
+          <div style="margin: 5px 16px">
+            <van-button plain block type="info" native-type="submit"
               >提交</van-button
             >
           </div>
         </van-form>
+        <div class="ques-img">
+          <img :src="require('../assets/cov.png')" />
+        </div>
+<div class="ctc ques-copyright">@Copyright © 2022 YingGe Tech</div>
+<div class="ctc ques-editor">Created By Peng Jinwei</div>
       </div>
     </full-page>
   </div>
@@ -463,5 +502,48 @@ export default {
   font-size: 14px;
   line-height: 22px;
   white-space: pre-wrap;
+}
+
+.ques-title {
+  padding-top: 20px;
+  font-size: 24px;
+  color: #3aa8ed;
+  display: flex;
+  justify-content: center;
+}
+.qeus-mini-title {
+  color: #3aa8ed;
+  display: flex;
+  justify-content: center;
+}
+.ques-img {
+  display: flex;
+  flex-grow: 1;
+  /* position: absolute; */
+  /* bottom: 0px;
+  right: 0px; */
+  position: absolute;
+  z-index: 999;
+  width: 200px;
+  height: 200px;
+  bottom: 0px;
+  left: 0px
+  /* z-index: 3; */
+}
+.ctc {
+  color: #646566;
+  padding: 16px;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+.ques-copyright {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+.ques-editor {
+    position: absolute;
+  right: 0px;
+  bottom: 26px;
 }
 </style>
