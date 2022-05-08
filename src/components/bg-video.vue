@@ -5,9 +5,9 @@
       ref="fullpage"
       :options="options"
       id="fullpage"
-      @click.native="interact"
+      @on-leave="fullPageChange"
     >
-      <div class="section" id="sectionOne">
+      <div class="section" id="sectionOne" @click="interact">
         <!-- 阻止事件冒泡 -->
         <div class="desc">
           <div class="desc-title">Vue.js</div>
@@ -60,7 +60,7 @@
           >asdsafds<iframe src="https://www.baidu.com"></iframe
         ></van-popup> -->
       </div>
-      <div class="section" id="sectionTwo">
+      <div class="section" id="sectionTwo" @click="interact">
         <div class="desc">
           <div class="desc-title">React</div>
           <div class="desc-content">
@@ -117,7 +117,7 @@
           >{{ content }}</van-popup
         > -->
       </div>
-      <div class="section" id="sectionThree">
+      <div class="section" id="sectionThree" @click="interact">
         <div class="section" id="sectionTwo">
           <div class="desc">
             <div class="desc-title">Rescript</div>
@@ -176,7 +176,7 @@
           >{{ content }}</van-popup
         > -->
       </div>
-      <div class="section" id="sectionFour">
+      <div class="section" id="sectionFour" @click="interact">
         <div class="avatar" @click="viewInfo">
           <el-avatar
             :size="70"
@@ -267,6 +267,7 @@ export default {
   name: "BackgroudVideo",
   data: function () {
     return {
+      pageIndex: 0,
       shakeHand: false,
       loveCount: 0,
       msgs: [
@@ -279,7 +280,9 @@ export default {
       localIconPath: ["../assets/qrcode.png"],
       viedoLoadFinsh: false,
       information: false,
-      options: {},
+      options: {
+        onLeave: this.fullPageChange,
+      },
       form: {
         name: "",
         email: "",
@@ -310,14 +313,23 @@ export default {
         source: this.videoUrls[i], //播放地址，可以是第三方直播地址，或阿里云直播服务中的拉流地址。
         isLive: false, //是否为直播播放。
         rePlay: true, // 重复播放
-        autoplay: true,
+        autoplay: false,
       });
       this.videoPlayers.push(playerIntance);
-      this.viedoLoadFinsh = true;
     }
+    // 初始化播放第一个视频
+    this.videoPlayers[this.pageIndex].play();
   },
   computed: {},
   methods: {
+    async fullPageChange(origin, destination) {
+      if (destination.index + 1 > this.videoUrls.length) {
+        this.videoPlayers[origin.index]?.pause();
+        return;
+      }
+      this.videoPlayers[destination.index]?.play();
+      console.log(origin.index, destination.index, "fullPageChange");
+    },
     getloveMsg() {
       if (this.msgs.length === 0) {
         return "我有点困了&#128564，你也要早睡哦，晚安🎈";
@@ -342,7 +354,6 @@ export default {
       // $event.preventDefault()
       this.information = true;
     },
-    onRefresh() {},
     validatorName(val) {
       console.log(val.length);
       return val.length < 10;
