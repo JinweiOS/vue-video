@@ -12,6 +12,11 @@
     <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <script charset="utf-8" type="text/javascript" src="https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js"></script>
+    <script type="text/javascript">
+      window.addEventListener('error', (error) => {
+      console.log('捕获到异常：', error);
+    }, true)
+    </script>
   </head>
   <body>
     <noscript>

@@ -23,7 +23,7 @@
 <script>
 export default {
   name: "Password",
-  data: function () {
+  data() {
     return {
       newp: "",
       comfirmp: "",

@@ -14,7 +14,7 @@ export default {
     Tab,
     Wallet,
   },
-  data: function() {
+  data() {
     return {
       name: '',
       coin: '',

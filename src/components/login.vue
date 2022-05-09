@@ -64,16 +64,8 @@ import bgVideo from "./bg-video.vue";
 export default {
   components: { bgVideo },
   name: "Login",
-  data: function () {
-    // return {
-    //   loginData: {
-    //     address: "",
-    //     passwd: "",
-    //   },
-    //   loginPanel: true,
-    //   cantSumbit: true,
-    //   newp: "",
-    // };
+  data() {
+    return {}
   },
   mounted() {
     // setInterval(() => {

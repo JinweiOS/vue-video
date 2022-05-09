@@ -292,11 +292,14 @@
               />
             </div>
           </div>
-          <div class="tips" >
-            🥇添加老师好友，回复已提交领取学习礼包~
-          </div>
+          <div class="tips">🥇添加老师好友，回复<span class="important-msg">已提交</span>领取学习礼包~</div>
           <div style="margin: 5px 16px">
-            <van-button plain block type="info" native-type="submit" size="small"
+            <van-button
+              plain
+              block
+              type="info"
+              native-type="submit"
+              size="small"
               >提交</van-button
             >
           </div>
@@ -313,7 +316,7 @@ import axios from "axios";
 import qs from "qs";
 export default {
   name: "BackgroudVideo",
-  data: function () {
+  data() {
     return {
       isShow: false,
       isAutoPlay: false,
@@ -350,9 +353,9 @@ export default {
       videoPlayers: [],
       videoUrls: [
         "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAgyNbhkwYo0J_5owc.mp4",
-        "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAggvTYkwYokq_Q2Ac.mp4",
-        'https://23126342.s21v.faiusr.com/58/ABUIABA6GAAg2JjikwYovdWvygE.mp4',
-        "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAgs6TekwYo5IbZkQI.mp4",
+        "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAgzNbhkwYopfeigQI.mp4",
+        "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAg9ePikwYo94DjqgM.mp4",
+        "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAg9_PikwYoto3f3AQ.mp4",
       ],
     };
   },
@@ -370,15 +373,34 @@ export default {
         source: this.videoUrls[i], //播放地址，可以是第三方直播地址，或阿里云直播服务中的拉流地址。
         isLive: false, //是否为直播播放。
         rePlay: true, // 重复播放
-        autoplay: this.isAutoPlay,
+        autoplay: false,
       });
+      // playerIntance.on("play", (eee) => console.log(eee, "播放了"));
+      // playerIntance.on("error", (eee) => console.log(eee, "错误了"));
+
       this.videoPlayers.push(playerIntance);
     }
-    this.videoPlayers[this.pageIndex].play();
+    // setInterval(() => {
+    //   const status = this.videoPlayers[0].getStatus();
+    //   if (status === "ready") {
+    //     this.videoPlayers[this.pageIndex].play();
+    //     document.getElementsByClassName('prism-big-play-btn')[0].click();
+    //     this.isShow = true;
+    //   }
+    //   console.log(status);
+    // }, 1000);
+    this.videoPlayers[0].on("ready", () => {
+      // this.videoPlayers[this.pageIndex].play();
+      this.isShow = true;
+    });
+    this.videoPlayers[0]?.play();
     this.isShow = true;
   },
   computed: {},
   methods: {
+    startView() {
+      this.videoPlayers[0].play();
+    },
     async fullPageChange(origin, destination) {
       // bug
       this.pageIndex = destination.index;
@@ -387,10 +409,11 @@ export default {
         this.pageIndex = destination.index - 1;
       }
       if (this.pageIndex > this.videoUrls.length) {
-        await this.videoPlayers[origin.index]?.pause();
+        this.videoPlayers[origin.index]?.pause();
         return;
       }
-      await this.videoPlayers[this.pageIndex]?.play();
+      this.videoPlayers[this.pageIndex] &&
+        this.videoPlayers[this.pageIndex].play();
     },
     getloveMsg() {
       if (this.msgs.length === 0) {
@@ -494,8 +517,6 @@ export default {
 .tips {
   padding-left: 16px;
 }
-
-
 
 .van-button--plain {
   font-size: 16px;
@@ -613,5 +634,20 @@ export default {
 .teacher-col {
   width: 100%;
   text-align: center;
+}
+
+.start {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 999;
+}
+
+.start:hover {
+  cursor: pointer;
+}
+
+.important-msg {
+  color: #fb5c56;
 }
 </style>
