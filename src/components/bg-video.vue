@@ -351,7 +351,7 @@ export default {
       videoUrls: [
         "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAgyNbhkwYo0J_5owc.mp4",
         "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAggvTYkwYokq_Q2Ac.mp4",
-        "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAggvTYkwYooMD47gY.mp4",
+        'https://23126342.s21v.faiusr.com/58/ABUIABA6GAAg2JjikwYovdWvygE.mp4',
         "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAgs6TekwYo5IbZkQI.mp4",
       ],
     };
