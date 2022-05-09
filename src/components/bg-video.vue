@@ -109,7 +109,7 @@
               p-id="3551"
             ></path>
           </svg>
-          <span class="logo-base">200</span>
+          <span class="logo-base">{{ loveCount }}</span>
         </div>
         <!-- <van-popup
           v-model="information"
@@ -168,7 +168,7 @@
               p-id="3551"
             ></path>
           </svg>
-          <span class="logo-base">200</span>
+          <span class="logo-base">{{ loveCount }}</span>
         </div>
         <!-- <van-popup
           v-model="information"
@@ -217,7 +217,7 @@
               p-id="3551"
             ></path>
           </svg>
-          <span class="logo-base">200</span>
+          <span class="logo-base">{{ loveCount }}</span>
         </div>
         <!-- <van-popup
           v-model="information"
@@ -258,7 +258,7 @@
             ></path></svg
         ></el-divider>
         <div class="ctc">🙊想了解更多吗？留下你的信息📘吧~</div>
-        <van-form @submit="onSubmit">
+        <van-form class="form-setting" @submit="onSubmit">
           <van-field
             v-model="form.name"
             label="姓名"
@@ -283,23 +283,26 @@
             placeholder="例如: 计算机科学与技术/其他..."
             :rules="[{ validatorQQ, message: '不要超过10个字符哦~' }]"
           />
-          <div class="ctc">
-            可以添加
-            <span style="color: #3a96dd">嘉嘉老师（1341384793）</span
-            >好友，回复已提交领取前端学习大礼包~
+          <div class="teacher">
+            <div class="teacher-col">
+              <img
+                width="130px"
+                height="180px"
+                :src="require('../assets/egalejiajia-removebg.png')"
+              />
+            </div>
+          </div>
+          <div class="tips" >
+            🥇添加老师好友，回复已提交领取学习礼包~
           </div>
           <div style="margin: 5px 16px">
-            <van-button plain block type="info" native-type="submit"
+            <van-button plain block type="info" native-type="submit" size="small"
               >提交</van-button
             >
           </div>
         </van-form>
-        <div class="ques-img">
-          <img width="200px" height="200px" :src="require('../assets/cov.png')" />
-        </div>
-        <div class="ctc ques-copyright">@Copyright © 2022 YingGe Tech</div>
-        <div class="ctc ques-editor">Created By Peng Jinwei</div>
-        <div class="ctc ques-qrcode"><img width="100px" height="100px" :src="require('../assets/qccode.png')"/></div>
+        <div class="ctc ques-copyright">@Copyright © 2022 YingGe Tech.</div>
+        <div class="ctc ques-editor">Created By Jinwei Peng.</div>
       </div>
     </full-page>
   </div>
@@ -346,7 +349,7 @@ export default {
       ],
       videoPlayers: [],
       videoUrls: [
-        "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAggvTYkwYo2P6g3gM.mp4",
+        "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAgyNbhkwYo0J_5owc.mp4",
         "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAggvTYkwYokq_Q2Ac.mp4",
         "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAggvTYkwYooMD47gY.mp4",
         "https://23126342.s21v.faiusr.com/58/ABUIABA6GAAgs6TekwYo5IbZkQI.mp4",
@@ -433,22 +436,23 @@ export default {
         }
       );
       this.$notify({
-        message: '你已成功提交报名信息！',
+        message: "你已成功提交报名信息！",
         dangerouslyUseHTMLString: true,
         duration: "750",
       });
       setTimeout(() => {
-        const link = document.createElement('a');
-        link.style.display = 'none';
-        link.href = 'tencent://message/?uin=1341384793&Site=http://iproute.cn&Menu=yes';
+        const link = document.createElement("a");
+        link.style.display = "none";
+        link.href =
+          "tencent://message/?uin=1341384793&Site=http://iproute.cn&Menu=yes";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
       }, 4000);
-      this.form.name = '';
-      this.form.school = '';
-      this.form.qq = '';
-      this.form.tech = '';
+      this.form.name = "";
+      this.form.school = "";
+      this.form.qq = "";
+      this.form.tech = "";
     },
     async getPlay() {
       return new Promise((resolve) => {
@@ -485,6 +489,16 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.tips {
+  padding-left: 16px;
+}
+
+
+
+.van-button--plain {
+  font-size: 16px;
 }
 
 .avatar:hover {
@@ -569,22 +583,35 @@ export default {
 .ctc {
   color: #646566;
   padding: 16px;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 1px;
 }
 .ques-copyright {
   position: absolute;
-  right: 0px;
+  left: 0px;
   bottom: 0px;
 }
 .ques-editor {
   position: absolute;
-  right: 0px;
+  left: 0px;
   bottom: 26px;
 }
 .ques-qrcode {
   position: absolute;
   right: 0px;
   bottom: 45px;
+}
+
+.form-setting /deep/ .van-cell {
+  font-size: 16px;
+}
+
+.teacher {
+  display: flex;
+}
+
+.teacher-col {
+  width: 100%;
+  text-align: center;
 }
 </style>
