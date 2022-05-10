@@ -1,9 +1,7 @@
 <template>
-  <div
-    class="container"
-  >
+  <div class="container">
     <!-- <van-skeleton title :row="20" :loading="viedoLoadFinsh">    </van-skeleton> -->
-    <div v-show="isShow">
+    <div>
       <full-page
         ref="fullpage"
         :options="options"
@@ -232,7 +230,7 @@
         > -->
         </div>
         <div class="section" id="sectionFive">
-          <div class="ques-title">报名表</div>
+          <div class="ques-title">短视频APP开发兴趣班&emsp;📢火热报名中</div>
           <div class="qeus-mini-title">Registration Form</div>
           <el-divider content-position="right"
             ><svg
@@ -291,9 +289,9 @@
             <div class="teacher">
               <div class="teacher-col">
                 <img
-                  width="130px"
+                  width="180px"
                   height="180px"
-                  :src="require('../assets/egalejiajia-removebg.png')"
+                  :src="require('../assets/eagleteacher.png')"
                 />
               </div>
             </div>
@@ -372,10 +370,10 @@ export default {
     // 播放器初始化
     const loading = this.$loading({
       lock: true,
-      text: "⏳视频正在拼命加载中...",
+      text: "⏳拼命加载中，滑到最后领取学习资料哦~",
       spinner: "el-icon-loading",
       background: "rgba(0, 0, 0, 0.9)",
-      customClass: 'loading-cus'
+      customClass: "loading-cus",
     });
 
     const Aliplayer = await this.getPlay();
@@ -391,12 +389,6 @@ export default {
         isLive: false, //是否为直播播放。
         rePlay: true, // 重复播放
         autoplay: false,
-        skinLayout: [
-          {
-            name: "H5Loading",
-            align: "cc",
-          },
-        ],
       });
       // playerIntance.on("play", (eee) => console.log(eee, "播放了"));
       // playerIntance.on("error", (eee) => console.log(eee, "错误了"));
@@ -412,27 +404,23 @@ export default {
     //   }
     //   console.log(status);
     // }, 1000);
-    this.videoPlayers[0].on("ready", () => {
-      // this.videoPlayers[this.pageIndex].play();
-      this.isShow = true;
-    });
-    this.videoPlayers[0]?.play();
     let timeAll = 0;
     const videoInitTimer = setInterval(() => {
       timeAll++;
       if (this.videoPlayers[3].getStatus() === "ready") {
-        this.isShow = true;
-        loading.close();
+        setTimeout(() => {
+          loading.close();
+        }, 1000);
+        // this.videoPlayers[0]?.play();
         clearInterval(videoInitTimer);
         return;
       }
       if (timeAll > 5) {
-        this.isShow = true;
         loading.close();
+        // this.videoPlayers[0]?.play();
         clearInterval(videoInitTimer);
       }
     }, 500);
-    this.isShow = true;
   },
   computed: {},
   methods: {
