@@ -26,7 +26,7 @@
           <div
             class="love-btn"
             :class="{ 'shake-hard': shakeHand }"
-            @click.stop="loveIt"
+            @click.stop="loveIt(0)"
           >
             <svg
               t="1651912015322"
@@ -55,7 +55,7 @@
                 p-id="3551"
               ></path>
             </svg>
-            <span class="logo-base">{{ loveCount }}</span>
+            <span class="logo-base">{{ loveCount[0] }}</span>
           </div>
           <!-- <van-popup
           v-model="information"
@@ -83,7 +83,7 @@
           <div
             class="love-btn"
             :class="{ 'shake-hard': shakeHand }"
-            @click.stop="loveIt"
+            @click.stop="loveIt(1)"
           >
             <svg
               t="1651912015322"
@@ -112,7 +112,7 @@
                 p-id="3551"
               ></path>
             </svg>
-            <span class="logo-base">{{ loveCount }}</span>
+            <span class="logo-base">{{ loveCount[1] }}</span>
           </div>
           <!-- <van-popup
           v-model="information"
@@ -142,7 +142,7 @@
           <div
             class="love-btn"
             :class="{ 'shake-hard': shakeHand }"
-            @click.stop="loveIt"
+            @click.stop="loveIt(2)"
           >
             <svg
               t="1651912015322"
@@ -171,7 +171,7 @@
                 p-id="3551"
               ></path>
             </svg>
-            <span class="logo-base">{{ loveCount }}</span>
+            <span class="logo-base">{{ loveCount[2] }}</span>
           </div>
           <!-- <van-popup
           v-model="information"
@@ -191,7 +191,7 @@
           <div
             class="love-btn"
             :class="{ 'shake-hard': shakeHand }"
-            @click.stop="loveIt"
+            @click.stop="loveIt(3)"
           >
             <svg
               t="1651912015322"
@@ -220,7 +220,7 @@
                 p-id="3551"
               ></path>
             </svg>
-            <span class="logo-base">{{ loveCount }}</span>
+            <span class="logo-base">{{ loveCount[3] }}</span>
           </div>
           <!-- <van-popup
           v-model="information"
@@ -329,7 +329,7 @@ export default {
       isAutoPlay: false,
       pageIndex: 0,
       shakeHand: false,
-      loveCount: 0,
+      loveCount: [0, 0, 0, 0],
       msgs: [
         "😀很高兴认识你呢~我叫秋颜🍂",
         "有你🥰在，满天都是星星&#10024;&#10024;",
@@ -447,8 +447,8 @@ export default {
       }
       return this.msgs.shift();
     },
-    loveIt() {
-      this.loveCount++;
+    loveIt(vIndex) {
+      this.loveCount[vIndex]++;
       this.shakeHand = true;
       setTimeout(() => {
         this.shakeHand = false;
