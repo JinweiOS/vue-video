@@ -1,26 +1,27 @@
 <template>
-  <router-view></router-view>
+  <div class="container">
+    <BgVideo />
+  </div>
 </template>
 
 <script>
+import BgVideo from "./components/bg-video.vue";
 export default {
+  components: {
+    BgVideo,
+  },
   name: "App",
 };
 </script>
 
 <style>
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  height: 100%;
-} */
-html,body {
+html,
+body {
   margin: 0;
   padding: 0;
+  height: 100%;
+}
+.container {
   height: 100%;
 }
 </style>
